@@ -1,0 +1,33 @@
+---
+config:
+  target: https://pokeapi.co/api/v2
+  phases:
+    - duration: 60
+      arrivalRate: 10
+  plugins:
+    ensure: {}
+  ensure:
+    thresholds:
+    - http.response_time.p95: 1000
+    conditions:
+        - expression: vusers.failed == 0
+        - expression: "http.request_rate >= 20 and http.response_time.max < 6000"
+scenarios:
+    - flow:
+      - get:
+          url: "{{ target }}/pokemon"
+          name: Get Pokemon Info
+      - post:
+          url: "{{ target }}post"
+          name: Create Pokemon
+          headers:
+            Content-Type: application/json
+          json:
+            $file: ./payloads/create_pokemon.json
+
+payloads:
+  create_pokemon:
+    - name: Pikachu
+      type: Electric
+      height: 40
+      weight: 60

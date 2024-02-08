@@ -1,0 +1,63 @@
+--------------------------------
+Summary report @ 22:53:50(+0100)
+--------------------------------
+
+http.codes.200: ................................................................ 600
+http.codes.404: ................................................................ 600
+http.downloaded_bytes: ......................................................... 0
+http.request_rate: ............................................................. 20/sec
+http.requests: ................................................................. 1200
+http.response_time:
+  min: ......................................................................... 15
+  max: ......................................................................... 499
+  mean: ........................................................................ 109.3
+  median: ...................................................................... 67.4
+  p95: ......................................................................... 232.8
+  p99: ......................................................................... 301.9
+http.responses: ................................................................ 1200
+vusers.completed: .............................................................. 600
+vusers.created: ................................................................ 600
+vusers.created_by_name.0: ...................................................... 600
+vusers.failed: ................................................................. 0
+vusers.session_length:
+  min: ......................................................................... 220.5
+  max: ......................................................................... 613
+  mean: ........................................................................ 258.1
+  median: ...................................................................... 247.2
+  p95: ......................................................................... 327.1
+  p99: ......................................................................... 432.7
+
+Checks:
+ok: http.request_rate >= 20 and http.response_time.max < 6000
+ok: vusers.failed == 0
+ok: http.response_time.p95 < 1000
+
+
+http.codes.200 i http.codes.404: Liczba żądań HTTP zakończonych kodem odpowiedzi 200 (sukces) i 404 (nie znaleziono). 
+W tym teście odnotowano 600 żądań z każdym z tych kodów. Wszystkie żądania typu POST zostały zakończone wynikiem 404, ponieważ
+PokeApi jest consumer-only API, co oznacza, że tylko żądania typu GET są obsługiwane.
+
+http.downloaded_bytes: W teście nie pobrano żadnych bajtów.
+
+http.request_rate: Średnia liczba żądań HTTP na sekundę wynosiła 20, co może być użytecznym wskaźnikiem obciążenia serwera.
+
+http.requests i http.responses: Łącznie wykonano 1200 żądań HTTP i otrzymano 1200 odpowiedzi.
+
+http.response_time: Pomiar czasu odpowiedzi HTTP. Wartości min, max, mean, median, p95 (percentyl 95) i p99 (percentyl 99) 
+pokazują odpowiednio minimalny, maksymalny, średni, medianę, wartość 95. percentyla i wartość 99. percentyla czasu odpowiedzi. 
+Dla tego testu maksymalny czas odpowiedzi wynosił 499 ms, co wskazuje na to, że większość żądań była obsługiwana w akceptowalnym 
+czasie.
+
+vusers.completed i vusers.created: Liczba zakończonych i utworzonych użytkowników wirtualnych. W teście zakończyło się 600 
+użytkowników spośród 600 utworzonych.
+
+vusers.failed: Liczba nieudanych użytkowników wirtualnych. W tym teście nie wystąpiły żadne niepowodzenia.
+
+vusers.session_length: Pomiar długości sesji użytkowników wirtualnych. Wartości min, max, mean, median, p95 i p99 pokazują 
+odpowiednio minimalną, maksymalną, średnią, medianę, wartość 95. percentyla i wartość 99. percentyla długość sesji. 
+W tym teście maksymalna długość sesji wynosiła 613 sekund.
+
+W ogólnym rozrachunku test wydaje się być udany, z większością żądań obsługiwanych w rozsądnym czasie i bez żadnych zauważalnych
+problemów wydajnościowych.
+
+Wszystkie założone przez ensure checki zostały spełnione.
